@@ -1,0 +1,14 @@
+{
+    "name": "wjb/rewire-bundle",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Zeljko Mitic",
+            "email": "mitke013@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": { "wjb\\RewireBundle\\": "" }
+    }
+}

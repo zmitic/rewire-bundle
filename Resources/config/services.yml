@@ -1,0 +1,4 @@
+services:
+#    wjb_rewire.example:
+#        class: wjb\RewireBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
