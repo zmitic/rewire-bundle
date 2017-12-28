@@ -1,5 +1,4 @@
 services:
-
     wjb\RewireBundle\Cache\RewireParamsAnnotationsWarmer:
         arguments: ['@router', '@annotations.reader']
         tags:
