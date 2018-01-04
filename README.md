@@ -81,7 +81,7 @@ public function indexAction(Post $post)
 ```
 
 ```html
-<a href="path('post_detailed', {'category_slug': new_post.category.slug, 'slug': post.slug})">View post</a>
+<a href="path('post_detailed', {'category_slug': new_post.category.slug, 'slug': new_post.slug})">View post</a>
 ```
 
 For this fictional blog application, generated route would be something like ``/conspiracy-theories/why-they-suck``. You can see why updating templates can be a problem.
@@ -101,7 +101,7 @@ public function indexAction(Post $post)
 and the template is still the same as if you used ``{id}`` only.
 
 ```html
-<a href="path('post_detailed', {'post': post})">View post</a>
+<a href="path('post_detailed', {'post': new_post})">View post</a>
 ```
 
 
