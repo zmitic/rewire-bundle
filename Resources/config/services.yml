@@ -1,10 +1,11 @@
 services:
-    wjb\RewireBundle\Cache\RewireParamsAnnotationsWarmer:
+    wjb_rewire.cache_warmer:
+        class: wjb\RewireBundle\Cache\RewireParamsAnnotationsWarmer
         arguments: ['@router', '@annotations.reader']
         tags:
             - { name: kernel.cache_warmer, priority: -100 }
 
-    wjb_rewire.routing_extension_decorator:
+    wjb_rewire.router_decorator:
         class: wjb\RewireBundle\Decorator\RoutingExtensionDecorator
-        decorates: twig.extension.routing
-        arguments: ['@router', '%kernel.cache_dir%']
+        decorates: router
+        arguments: ['@wjb_rewire.router_decorator.inner', '%kernel.cache_dir%']

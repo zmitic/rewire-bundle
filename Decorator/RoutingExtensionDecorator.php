@@ -2,40 +2,71 @@
 
 namespace wjb\RewireBundle\Decorator;
 
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Component\PropertyAccess\Exception\AccessException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
-class RoutingExtensionDecorator extends RoutingExtension
+class RoutingExtensionDecorator implements RouterInterface
 {
     private $rewireConfig;
 
     /** @var PropertyAccessor  */
     private $propertyAccessor;
+    private $router;
 
-    public function __construct(UrlGeneratorInterface $generator, string $cacheDir)
+    public function __construct(RouterInterface $router, $cacheDir)
     {
+        $this->router = $router;
         $this->rewireConfig = require $cacheDir.'/wjb_rewire.php';
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
-        parent::__construct($generator);
     }
 
-    public function getPath($name, $parameters = array(), $relative = false): string
+    /**
+     * @return void
+     */
+    public function setContext(RequestContext $context)
+    {
+        $this->router->setContext($context);
+    }
+
+    /**
+     * @return RequestContext The context
+     */
+    public function getContext()
+    {
+        return $this->router->getContext();
+    }
+
+    /**
+     * @return RouteCollection A RouteCollection instance
+     */
+    public function getRouteCollection()
+    {
+        return $this->router->getRouteCollection();
+    }
+
+    public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
         $this->rewireParamsForRoute($name, $parameters);
 
-        return parent::getPath($name, $parameters, $relative);
+        return $this->router->generate($name, $parameters, $referenceType);
     }
 
-    public function getUrl($name, $parameters = array(), $schemeRelative = false): string
+    public function match($pathinfo)
     {
-        $this->rewireParamsForRoute($name, $parameters);
-
-        return parent::getUrl($name, $parameters, $schemeRelative);
+        return $this->router->match($pathinfo);
     }
 
-    private function rewireParamsForRoute(string $routeName, array &$parameters): void
+
+    /**
+     * @param string $routeName
+     * @param array $parameters
+     * @throws AccessException
+     */
+    private function rewireParamsForRoute($routeName, array &$parameters)
     {
         if (!isset($this->rewireConfig[$routeName])) {
             return;
@@ -51,7 +82,13 @@ class RoutingExtensionDecorator extends RoutingExtension
         }
     }
 
-    private function rewireParamsFromConfig(array &$parameters, array $config): bool
+    /**
+     * @param array $parameters
+     * @param array $config
+     * @return bool
+     * @throws AccessException
+     */
+    private function rewireParamsFromConfig(array &$parameters, array $config)
     {
         $requiredParams = (array)$config['requires'];
 

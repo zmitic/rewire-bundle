@@ -23,14 +23,14 @@ class RewireParamsAnnotationsWarmer extends CacheWarmer
         $this->annotationReader = $annotationReader;
     }
 
-    public function isOptional(): bool
+    public function isOptional()
     {
         return false;
     }
 
-    public function warmUp($cacheDir): void
+    public function warmUp($cacheDir)
     {
-        $routes = $this->router->getRouteCollection()->all();
+        $routes = (array)$this->router->getRouteCollection()->all();
 
         $cache = [];
         foreach ($routes as $routeName => $config) {
@@ -49,8 +49,9 @@ class RewireParamsAnnotationsWarmer extends CacheWarmer
 
     /**
      * @return RewireParams[]
+     * @throws \ReflectionException
      */
-    private function getRewireParams(Route $route): array
+    private function getRewireParams(Route $route)
     {
         $defaults = $route->getDefaults();
         $controller = $defaults['_controller'];
@@ -58,13 +59,13 @@ class RewireParamsAnnotationsWarmer extends CacheWarmer
             return [];
         }
 
-        [$controllerClass, $method] = explode('::', $controller);
+        list($controllerClass, $method) = explode('::', $controller);
 
         $methodReflection = new \ReflectionMethod($controllerClass, $method);
         $methodAnnotations = $this->annotationReader->getMethodAnnotations($methodReflection);
 
         $results = [];
-        foreach ($methodAnnotations as $annotation) {
+        foreach ((array)$methodAnnotations as $annotation) {
             if ($annotation instanceof RewireParams) {
                 $results[] = $annotation;
             }
