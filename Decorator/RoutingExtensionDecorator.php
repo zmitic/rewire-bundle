@@ -11,16 +11,19 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RoutingExtensionDecorator implements RouterInterface
 {
-    private $rewireConfig;
+    private $rewireConfig = [];
 
     /** @var PropertyAccessor  */
     private $propertyAccessor;
+
     private $router;
 
     public function __construct(RouterInterface $router, $cacheDir)
     {
         $this->router = $router;
-        $this->rewireConfig = require $cacheDir.'/wjb_rewire.php';
+        if (null !== $cacheDir && file_exists($cacheFilename = $cacheDir.'/wjb_rewire.php')) {
+            $this->rewireConfig = require $cacheFilename;
+        }
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
