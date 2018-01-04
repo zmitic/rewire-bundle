@@ -13,8 +13,8 @@ public function indexAction(Post $post)
 
 then your templates will have this:
 
-```html
-<a href="path('post_detailed', {'id': new_post.id})">View post</a>
+```twig
+<a href="{{ path('post_detailed', {'id': new_post.id}) }}">View post</a>
 ```
 
 *For this simple case, [ParamConverter](https://symfony.com/doc/current/best_practices/controllers.html#using-the-paramconverter) is automatically applied.*
@@ -37,8 +37,8 @@ public function indexAction(Post $post)
 
 and the template:
 
-```html
-<a href="path('post_detailed', {'post': new_post})">View post</a>
+```twig
+<a href="{{ path('post_detailed', {'post': new_post}) }}">View post</a>
 ```
 
 Now instead of ``new_post.id`` you can use object itself and this bundle will use it to generate ``{id}`` needed for route.
@@ -61,10 +61,10 @@ and that's all, template doesn't require any changes.
 If you install this bundle, you don't have to change all your templates immediatelly. So both these combinations would still work:
 
 
-```html
-<a href="path('post_detailed', {'id': new_post.id})">View post</a>
+```twig
+<a href="{{ path('post_detailed', {'id': new_post.id}) }}">View post</a>
 
-<a href="path('post_detailed', {'post': new_post})">View post</a>
+<a href="{{ path('post_detailed', {'post': new_post}) }}">View post</a>
 ```
 
 #### Complex routes
@@ -80,8 +80,8 @@ public function indexAction(Post $post)
 {...}
 ```
 
-```html
-<a href="path('post_detailed', {'category_slug': new_post.category.slug, 'slug': new_post.slug})">View post</a>
+```twig
+<a href="{{ path('post_detailed', {'category_slug': new_post.category.slug, 'slug': new_post.slug}) }}">View post</a>
 ```
 
 For this fictional blog application, generated route would be something like ``/conspiracy-theories/why-they-suck``. You can see why updating templates can be a problem.
@@ -100,8 +100,8 @@ public function indexAction(Post $post)
 
 your template doesn't require any changes, it would remain the same:
 
-```html
-<a href="path('post_detailed', {'post': new_post})">View post</a>
+```twig
+<a href="{{ path('post_detailed', {'post': new_post}) }}">View post</a>
 ```
 
 #### Usage
