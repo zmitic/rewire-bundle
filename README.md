@@ -112,7 +112,7 @@ The @RewireParams annotation has 2 properties:
  - rewire: a set of key=>value pairs where key is the name used in your @Route annotation and value is [PropertyAccess](http://symfony.com/doc/current/components/property_access.html#reading-from-objects) rule for reading objects.
 
 #### Perfomance
-While there is perfomance hit, I didn't notice any on page with 106 routes (largest I have). It is probably to small to spot it but more testing is needed.
+While there is perfomance hit, I didn't notice any on page with 106 routes (largest I have). It is probably too small to spot it but more testing is needed.
 
 Program works by caching @RewireParams annotations and later using it in Router decorator class. Given this bundle is built in a day, I am sure improvements can be made.
 
