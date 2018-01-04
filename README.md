@@ -1,7 +1,7 @@
-##### Change your routes without changing your templates
+#### Use objects to generate routes
 
-##### Example
-If you have a route like this:
+
+Let's say you have a blog application with route like this:
 
 ```php
 /**
@@ -20,7 +20,7 @@ then your templates will have this:
 *For this simple case, [ParamConverter](https://symfony.com/doc/current/best_practices/controllers.html#using-the-paramconverter) is automatically applied.*
 
 ##### The problem
-Imagine you want to change it to use slug instead of id in your URL. Updating controller is simple, but updating all the templates is not so.
+Now imagine you want to change it to use ``{slug}`` instead of ``{id}`` in your URL. Updating controller is simple, but updating all the templates is not so.
 
 ##### The solution
 
@@ -41,9 +41,9 @@ and the template:
 <a href="path('post_detailed', {'post': new_post})">View post</a>
 ```
 
-Now instead of ``new_post.id`` you can use object itself and this bundle will use it to generate {id} needed for route.
+Now instead of ``new_post.id`` you can use object itself and this bundle will use it to generate ``{id}`` needed for route.
 
-So if you want to slug instead of id in your route, just do this:
+So if you want to slug instead of id in your route, just update your controller:
 
 ```php
 /**
@@ -54,11 +54,11 @@ public function indexAction(Post $post)
 {...}
 ```
 
-and that's all.
+and that's all, template doesn't require any changes.
 
 #### Note
 
-If you install this bundle, you don't have to change all your templates. So both this combinations will work:
+If you install this bundle, you don't have to change all your templates immediatelly. So both these combinations would still work:
 
 
 ```html
@@ -68,7 +68,7 @@ If you install this bundle, you don't have to change all your templates. So both
 ```
 
 #### Complex routes
-The above example is pretty simple so let's try something more complex. For this, imagine we wanted to add ``category_slug`` to URL for better SEO.
+The above example is pretty simple so let's try something more complex. For this, imagine we wanted to add ``{category_slug}`` to URL for better SEO.
 
 The old way:
 
@@ -98,13 +98,23 @@ public function indexAction(Post $post)
 {...}
 ```
 
-and the template is still the same as if you used ``{id}`` only.
+your template doesn't require any changes, it would remain the same:
 
 ```html
 <a href="path('post_detailed', {'post': new_post})">View post</a>
 ```
 
+#### Usage
 
+The @RewireParams annotation has 2 properties: 
+
+ - requires: these are names of your parameters. ``post`` is used in all examples.
+ - rewire: a set of key=>value pairs where key is the name used in your @Route annotation and value is [PropertyAccess](http://symfony.com/doc/current/components/property_access.html#reading-from-objects) rule for reading objects.
+
+#### Perfomance
+While there is perfomance hit, I didn't notice any on page with 106 routes (largest I have). It is probably to small to spot it but more testing is needed.
+
+Program works by caching @RewireParams annotations and later using it in Router decorator class. Given this bundle is built in a day, I am sure improvements can be made.
 
 #### Installation
     composer require wjb/rewire-bundle
