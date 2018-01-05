@@ -1,3 +1,0 @@
-#wjb_rewire_homepage:
-#    path:     /
-#    defaults: { _controller: wjbRewireBundle:Default:index }
