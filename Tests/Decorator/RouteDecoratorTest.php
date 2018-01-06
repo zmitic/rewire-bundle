@@ -6,9 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use wjb\RewireBundle\Decorator\RoutingDecorator;
-use wjb\RewireBundle\Fixtures\Controller\FooController;
-use wjb\RewireBundle\Fixtures\Entity\Category;
-use wjb\RewireBundle\Fixtures\Entity\Post;
+use wjb\RewireBundle\Tests\Fixtures\Entity\Category;
+use wjb\RewireBundle\Tests\Fixtures\Entity\Post;
 
 class RouteDecoratorTest extends KernelTestCase
 {
@@ -23,7 +22,7 @@ class RouteDecoratorTest extends KernelTestCase
 
     protected function setUp()
     {
-        require_once __DIR__.'/../../Fixtures/TestKernel.php';
+        require_once __DIR__.'/../Fixtures/TestKernel.php';
 
         $kernel = new \TestKernel('test', true);
         $kernel->boot();
@@ -81,6 +80,20 @@ class RouteDecoratorTest extends KernelTestCase
 
         $path = $this->router->generate('rewire_complex', ['post' => $post]);
         $this->assertEquals('/post/complex/category-slug/post-slug', $path);
+    }
+
+    /**
+     * @see FooController::dualRewiring()
+     */
+    public function testDualRewiring()
+    {
+        $post = $this->post;
+
+        $path = $this->router->generate('rewire_dual', ['post' => $post]);
+        $this->assertEquals('/post/multiple/category-slug/post-slug', $path);
+
+        $path = $this->router->generate('rewire_dual', ['new_post' => $post, 'category' => $post->getCategory()]);
+        $this->assertEquals('/post/multiple/category-slug/post-slug', $path);
     }
 }
 

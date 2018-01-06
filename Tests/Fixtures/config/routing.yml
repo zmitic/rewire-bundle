@@ -1,0 +1,3 @@
+test:
+    resource: '@wjbRewireBundle/Tests/Fixtures/Controller'
+    type: annotation

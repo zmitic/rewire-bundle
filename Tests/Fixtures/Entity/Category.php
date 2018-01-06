@@ -1,6 +1,6 @@
 <?php
 
-namespace wjb\RewireBundle\Fixtures\Entity;
+namespace wjb\RewireBundle\Tests\Fixtures\Entity;
 
 class Category
 {

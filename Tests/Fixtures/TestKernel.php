@@ -26,5 +26,15 @@ class TestKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config.yml');
     }
+
+    public function getCacheDir()
+    {
+        return $this->rootDir.'/../../var/cache/'.$this->environment;
+    }
+
+    public function getLogDir()
+    {
+        return $this->rootDir.'/../../var/logs/'.$this->environment;
+    }
 }
 

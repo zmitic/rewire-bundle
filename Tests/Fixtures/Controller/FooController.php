@@ -1,6 +1,6 @@
 <?php
 
-namespace wjb\RewireBundle\Fixtures\Controller;
+namespace wjb\RewireBundle\Tests\Fixtures\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use wjb\RewireBundle\Annotation\RewireParams;
@@ -30,7 +30,17 @@ class FooController
      *
      * @RewireParams(requires={"post"}, rewire={"category_slug"="post.category.slug", "slug"="post.slug"})
      */
-    public function complex($slug)
+    public function complex($category_slug, $slug)
+    {
+    }
+
+    /**
+     * @Route("/post/multiple/{category_slug}/{slug}", name="rewire_dual")
+     *
+     * @RewireParams(requires={"new_post", "category"}, rewire={"category_slug"="category.slug", "slug"="new_post.slug"})
+     * @RewireParams(requires={"post"}, rewire={"category_slug"="post.category.slug", "slug"="post.slug"})
+     */
+    public function dualRewiring($slug)
     {
     }
 

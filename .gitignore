@@ -1,5 +1,4 @@
 phpunit.xml
 composer.lock
 vendor/
-/Fixtures/cache
-/Fixtures/logs
+var/

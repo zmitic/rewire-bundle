@@ -116,13 +116,16 @@ class RoutingDecorator implements RouterInterface
     /**
      * @param array $parameters
      * @param array $config
+     *
      * @return bool
+     *
      * @throws UnexpectedTypeException|InvalidArgumentException|AccessException
      */
     private function rewireParamsFromConfig(array &$parameters, array $config)
     {
         $requiredParams = (array)$config['requires'];
 
+        // check if all required params for rewiring are provided
         foreach ($requiredParams as $requiredParam) {
             if (!isset($parameters[$requiredParam])) {
                 return false;
