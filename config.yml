@@ -1,0 +1,7 @@
+framework:
+    secret: test
+    session:
+        storage_id: session.storage.mock_file
+
+my_own:
+    test: 2
