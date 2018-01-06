@@ -10,9 +10,17 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~3.2|~4.0"
+        "symfony/framework-bundle": "~3.2|~4.0",
+        "symfony/property-access": "~3.2|~4.0",
+        "doctrine/annotations": "^1.0"
     },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.4|^4.0",
+        "phpunit/phpunit": "^5.0"
+    },
+
     "autoload": {
-        "psr-4": { "wjb\\RewireBundle\\": "" }
+        "psr-4": { "wjb\\RewireBundle\\": "" },
+        "exclude-from-classmap": ["/Tests/"]
     }
 }

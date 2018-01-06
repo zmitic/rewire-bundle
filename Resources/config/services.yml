@@ -6,6 +6,6 @@ services:
             - { name: kernel.cache_warmer, priority: -100 }
 
     wjb_rewire.router_decorator:
-        class: wjb\RewireBundle\Decorator\RoutingExtensionDecorator
+        class: wjb\RewireBundle\Decorator\RoutingDecorator
         decorates: router
         arguments: ['@wjb_rewire.router_decorator.inner', '%kernel.cache_dir%']
