@@ -1,6 +1,5 @@
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/430c2d28-d084-4d56-8fe2-8c0e0290d02b/big.png)](https://insight.sensiolabs.com/projects/430c2d28-d084-4d56-8fe2-8c0e0290d02b)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/521ba211-e26d-419c-9d0d-93c56950c1bb/big.png)](https://insight.sensiolabs.com/projects/521ba211-e26d-419c-9d0d-93c56950c1bb)
 #### Use objects to generate routes
 
 
