@@ -61,6 +61,9 @@ class RewireParamsAnnotationsWarmer extends CacheWarmer
 
         list($controllerClass, $method) = explode('::', $controller);
 
+        if (!class_exists($controllerClass)) {
+            return [];
+        }
         $methodReflection = new \ReflectionMethod($controllerClass, $method);
         $methodAnnotations = $this->annotationReader->getMethodAnnotations($methodReflection);
 
